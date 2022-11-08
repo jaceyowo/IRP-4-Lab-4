@@ -58,7 +58,7 @@ void loop() {
   if (millis() > timer){                                          // if uC clock exceed timer, read sensor and publish
   if (!client.connected()) {                                // Line18: Check connection to broker
     mqttconnect();                                          // Line19: Connect to broker
-    client.subscribe(topic_sub);                            // Line20: Subscribe to "topic_sub"
+    //client.subscribe(topic_sub);                            // Line20: Subscribe to "topic_sub"
   }                                                         // Line21:
     sensor = analogRead(SENSOR)+ 150 ;                            // Read Va binary code; compensate ESP32 ADC offset error, ~150
     Serial.print("Sense binary code:");                       
