@@ -79,9 +79,7 @@ void loop() {
       Serial.println("");                                     // Line26: print end line
                                                               // Line27: blank; add instruction if required
     }
-
-    convert_json();                                               // convert payload to json string format
-  
+    convert_json();                                               // convert payload to json string format 
     set_timer();                                                  // increment timer with preset interval
   }
   client.loop();                                            // Line31: mqtt real time function
@@ -99,9 +97,9 @@ void callback(char* topic, byte* payload, unsigned int length) {
   Serial.print(sub_payload);
   Serial.println(topic);
   if (sub_payload < Threshold) {                              // Line32: if received subscribe payload < Threshold, do line 33
-    digitalWrite(Builtin_LED, HIGH);                           // Line33: turn on Builtin_LED
+    digitalWrite(RELAY, HIGH);                           // Line33: turn on Builtin_LED
   } else{
-    digitalWrite(Builtin_LED, LOW);                          // Line34: else turn off Builtin LED
+    digitalWrite(RELAY, LOW);                          // Line34: else turn off Builtin LED
   }
 }
  
