@@ -23,13 +23,13 @@ float sensor;
  ****************************************/
 #define WIFISSID "LAPTOP-GCAD0KR7 1308"                                        // Line1: Wifi SSID
 #define PASSWORD "0$o6U800"                                        // Line2: Wifi password
-#define TOKEN "BBFF-T1JBNrMvqah4idOlE2ZoEiqCC5vgfM"           		      // Line3: Ubidots TOKEN
+#define TOKEN "BBFF-jg5OfeuyEvgWfIGiQFNO6rDFMksKQS"                     // Line3: Ubidots TOKEN
 
 /****************************************
  * Define Constants and assign Pins
  ****************************************/
 #define MQTT_CLIENT_NAME "S10223377"                          // Line4: Set unique device client Name; 8-12 alphanumeric string 
-#define VARIABLE_LABEL "volts"                                // Line5: Set variable label; lowercase only
+#define VARIABLE_LABEL "lux"                                // Line5: Set variable label; lowercase only
 #define DEVICE_LABEL "lightsensor"                            // Line6: Set device label; lowercase only                                                  
 
 #define SENSOR 32                                             // Line7: Assign SENSOR to pin32
@@ -60,27 +60,7 @@ void loop() {
     mqttconnect();                                          // Line19: Connect to broker
     client.subscribe(topic_sub);                            // Line20: Subscribe to "topic_sub"
   }                                                         // Line21:
-    sensor = analogRead(SENSOR)+ 150 ;                            // Read Va binary code; compensate ESP32 ADC offset error, ~150
-    Serial.print("Sense binary code:");                       
-    Serial.print(sensor);                                     
-  
-    sensor = sensor * 0.0008;                                     // Convert binary to voltage by x3.3/4095 ( = x0.0008)
-    Serial.print(" / Sense Voltage Va (V):");                 
-    Serial.print(sensor);                                     
-    sensor = 200/sensor;
-    Serial.print(" / Sense Intensity Lux:");                 
-    Serial.print(sensor);   
-    if (sensor > Threshold){                                  // Line22: If sensor > Threshold, do line23,24
-      Serial.println("  / light is very dim");                // Line23: print text to serial monitor and end line
-                                                              // Line24-1: blank; add instruction if required
-                                                              // Line24-2:blank; add instruction if required
-    }
-    else {                                                    // Line25: else, do line 26,27                                                    
-      Serial.println("");                                     // Line26: print end line
-                                                              // Line27: blank; add instruction if required
-    }
-    convert_json();                                               // convert payload to json string format 
-    set_timer();                                                  // increment timer with preset interval
+                                                    // Line27: blank; add instruction if required
   }
   client.loop();                                            // Line31: mqtt real time function
 }
