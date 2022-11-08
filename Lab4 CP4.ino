@@ -28,7 +28,7 @@ float sensor;
 /****************************************
  * Define Constants and assign Pins
  ****************************************/
-#define MQTT_CLIENT_NAME "S10223377"                          // Line4: Set unique device client Name; 8-12 alphanumeric string 
+#define MQTT_CLIENT_NAME "esp32irp4"                          // Line4: Set unique device client Name; 8-12 alphanumeric string 
 #define VARIABLE_LABEL "volts"                                // Line5: Set variable label; lowercase only
 #define DEVICE_LABEL "lightsensor"                            // Line6: Set device label; lowercase only                                                  
 
@@ -37,7 +37,7 @@ float sensor;
 #define PB 25                                                 // Line9: Assign Pushbutton to pin25
 #define RELAY 27                                              // Line10: Assign Relay control to pin27
 
-float Threshold = 120;                                          // Line11: Set Threshold intensity(in Volts)
+float Threshold = 3;                                          // Line11: Set Threshold intensity(in Volts)
 unsigned long interval= 10000;                                // Line12: Set interval between publish(in ms)
 
 /************ Main Functions*************/
@@ -67,9 +67,7 @@ void loop() {
     sensor = sensor * 0.0008;                                     // Convert binary to voltage by x3.3/4095 ( = x0.0008)
     Serial.print(" / Sense Voltage Va (V):");                 
     Serial.print(sensor);                                     
-    sensor = 200/sensor;
-    Serial.print(" / Sense Intensity Lux:");                 
-    Serial.print(sensor);   
+
     if (sensor > Threshold){                                  // Line22: If sensor > Threshold, do line23,24
       Serial.println("  / light is very dim");                // Line23: print text to serial monitor and end line
                                                               // Line24-1: blank; add instruction if required
@@ -79,8 +77,10 @@ void loop() {
       Serial.println("");                                     // Line26: print end line
                                                               // Line27: blank; add instruction if required
     }
-
-    convert_json();                                               // convert payload to json string format
+                                                              // Line28: blank; add Convert sensor voltage to sensor value if required
+  convert_json();                                               // convert payload to json string format
+  Serial.println("Publishing data to Ubidots");             // Line29: Print statement
+  client.publish(topic_pub, payload);                       // Line30: publish payload to topic_pub
   
     set_timer();                                                  // increment timer with preset interval
   }
@@ -99,9 +99,9 @@ void callback(char* topic, byte* payload, unsigned int length) {
   Serial.print(sub_payload);
   Serial.println(topic);
   if (sub_payload < Threshold) {                              // Line32: if received subscribe payload < Threshold, do line 33
-    digitalWrite(Builtin_LED, HIGH);                           // Line33: turn on Builtin_LED
+    digitalWrite(RELAY, LOW);                           // Line33: turn on Builtin_LED
   } else{
-    digitalWrite(Builtin_LED, LOW);                          // Line34: else turn off Builtin LED
+    digitalWrite(RELAY, HIGH);                          // Line34: else turn off Builtin LED
   }
 }
  
