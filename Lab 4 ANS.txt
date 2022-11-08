@@ -1,0 +1,7 @@
+True
+(a) 10
+(a)
+sensor
+string
+False
+True
