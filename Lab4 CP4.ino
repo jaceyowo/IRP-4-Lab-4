@@ -23,7 +23,7 @@ float sensor;
  ****************************************/
 #define WIFISSID "LAPTOP-GCAD0KR7 1308"                                        // Line1: Wifi SSID
 #define PASSWORD "0$o6U800"                                        // Line2: Wifi password
-#define TOKEN "BBFF-T1JBNrMvqah4idOlE2ZoEiqCC5vgfM"                     // Line3: Ubidots TOKEN
+#define TOKEN "<insert token>"                     // Line3: Ubidots TOKEN
 
 /****************************************
    Define Constants and assign Pins
